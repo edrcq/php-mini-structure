@@ -44,8 +44,10 @@ if ($username_len < 3 || $username_len > 12) {
     die();
 }
 
-$user = User::register($_POST['email'], $_POST['username'], $_POST['password']);
-$user_id = $user->save();
+$user_id = $dbMan->insert(
+    'INSERT INTO  users (email, username, password, role, last_ip) VALUES(?,?,?,?,?)',
+    [$_POST['email'], $_POST['username'], $_POST['password'], 0, $_SERVER['REMOTE_ADDR']]
+);
 
 // auto connect after register
 $_SESSION['user_id'] = $user_id;

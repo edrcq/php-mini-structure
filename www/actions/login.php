@@ -20,7 +20,8 @@ if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
     die();
 }
 
-$user = User::getByEmail($_POST['email']);
+// to be verified
+$user = $dbMan->getBy_advanced('email',  $_POST['email'], 'User');
 if ($user !== false) {
     $validPassword = $user->verifyPassword($_POST['password']);
     if ($validPassword) {
